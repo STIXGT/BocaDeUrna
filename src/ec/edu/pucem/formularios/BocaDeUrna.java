@@ -24,6 +24,7 @@ public class BocaDeUrna extends JInternalFrame implements ActionListener {
 	private List<Prefecto> prefectos;
 	private JPanel panel;
 	private JButton btnCancelar;
+	private JButton btnGanador;
 
 	public BocaDeUrna(List<Prefecto> prefectos) {
 		this.prefectos = prefectos;
@@ -48,11 +49,19 @@ public class BocaDeUrna extends JInternalFrame implements ActionListener {
 		panel = new JPanel();
 		panel.setBounds(12, 12, 566, 84);
 		getContentPane().add(panel);
-
+		
+	
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(this);
 		btnCancelar.setBounds(157, 351, 117, 25);
 		getContentPane().add(btnCancelar);
+		
+		btnGanador = new JButton("Ganador");
+		btnGanador.addActionListener(this);
+		btnGanador.setBounds(157, 350, 117, 26);
+		getContentPane().add(btnGanador);
+		
+		
 
 		model = (DefaultTableModel) table.getModel();
 		cargarCandidatos();
@@ -74,26 +83,29 @@ public class BocaDeUrna extends JInternalFrame implements ActionListener {
 	private void llenarTabla() {
 		model.setRowCount(0);
 		for (Prefecto prefecto : prefectos) {
+			
 			Object[] fila = new Object[2];
-			// Completar
-			model.addRow(fila);
+					fila[0] = prefecto.getNombre();
+					fila[1] = prefecto.getVotos();
+					model.addRow(fila);
 		}
 	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancelar) {
 			dispose();
 		}
+		
 		String textoBotonPulsado = e.getActionCommand();
-		// Ej: textoBotonPulsado puedría contener "Candidato 1"
 		for (Prefecto prefecto : prefectos) {
-			// Completar
-			// Aquí debe ir sumando los votos del candidato seleccionado
+			if (textoBotonPulsado == prefecto.getNombre()) {
+			prefecto.setVotos ((prefecto.getVotos() + 1 ));
 			llenarTabla();
+			}
 		}
 	}
-
 	public List<Prefecto> getPrefectos() {
 		return prefectos;
 	}

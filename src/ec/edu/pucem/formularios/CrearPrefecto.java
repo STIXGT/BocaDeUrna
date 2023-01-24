@@ -79,25 +79,33 @@ public class CrearPrefecto extends JInternalFrame implements ActionListener {
 		agregarFila();
 	}
 
+
 	private void nuevo() {
 		prefecto = new Prefecto();
-		//Completar
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtNombre.setText(null);
+			}
+		});;
 	}
-
+	
 	private void agregarPrefecto() {
 		prefecto = new Prefecto();
-		// Completar
+		prefecto.setNombre(txtNombre.getText());
 		agregarFila();
+		prefectos.add(prefecto);
+		model.addRow(new Object[] {prefecto.getNombre()});
 		idPrefecto++;
 	}
 
 	private void agregarFila() {
 		model.setRowCount(0);
 		for (Prefecto prefecto : prefectos) {
-			// Completar
+			model.addRow(new Object[] {prefecto.getNombre()});
 		}
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNuevo) {
